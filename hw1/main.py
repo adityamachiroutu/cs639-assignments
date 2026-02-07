@@ -79,7 +79,17 @@ def pad_sentences(sents, pad_id):
     Return:
         aug_sents: list(list(int)), |s_1| == |s_i|, for s_i in sents
     """
-    raise NotImplementedError()
+    if not sents:
+        return []
+    max_len = max(len(sent) for sent in sents)
+    aug_sents = []
+    for sent in sents:
+        pad_len = max_len - len(sent)
+        if pad_len > 0:
+            aug_sents.append(sent + [pad_id] * pad_len)
+        else:
+            aug_sents.append(list(sent))
+    return aug_sents
 
 def compute_grad_norm(model, norm_type=2):
     """
